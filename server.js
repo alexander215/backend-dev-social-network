@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 3000;
+const PORT = 9000;
 const cors = require('cors');
 const session = require('express-session');
 
@@ -24,8 +24,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const userController = require('./controllers/userController');
+const projectController = require('./controllers/projectController.js')
 
 app.use('/users', userController);
+app.use('/projects', projectController);
 
 
 
