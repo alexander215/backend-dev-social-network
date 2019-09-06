@@ -63,6 +63,24 @@ router.get('/logout', (req, res) => {
             res.redirect('/');
         }
     })
+}),
+
+router.get('/', async (req, res) => {
+    console.log(req.body, '<-Req.body in the get / route')
+    try {
+        const allUsers = await User.find();
+        console.log(allUsers, "<--all users in get / route")
+        res.json({
+            status: {
+                code: 200,
+                message: "Success"
+            },
+            data: allUsers
+        });
+    } catch (err){
+        res.send(err)
+        console.log(err, "<-err in get route")
+    }
 })
 
 module.exports = router;
