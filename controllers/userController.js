@@ -80,7 +80,24 @@ router.get('/:id', async (req, res) => {
     } catch (err){
         res.send(err);
     }
-})
+}),
+
+router.put('/:id', async (req, res) => {
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        console.log(updatedUser, "<--updated user in update route")
+        res.json({
+            status: {
+                code: 201,
+                message: "User successfully updated"
+            },
+            data: updatedUser
+        })
+    } catch(err){
+        res.send(err)
+    }
+}),
 
 router.get('/', async (req, res) => {
 
