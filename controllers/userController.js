@@ -65,11 +65,27 @@ router.get('/logout', (req, res) => {
     })
 }),
 
+router.get('/:id', async (req, res) => {
+    console.log(req.params, "<-req.params in find by id route")
+    try {
+        const foundUser = await User.findById(req.params.id);
+        console.log(foundUser, '<-- foundUser in get by id route')
+        res.json({
+            status: {
+                code: 200,
+                message: "Success"
+            },
+            data: foundUser
+        });
+    } catch (err){
+        res.send(err);
+    }
+})
+
 router.get('/', async (req, res) => {
-    console.log(req.body, '<-Req.body in the get / route')
+
     try {
         const allUsers = await User.find();
-        console.log(allUsers, "<--all users in get / route")
         res.json({
             status: {
                 code: 200,
@@ -79,7 +95,6 @@ router.get('/', async (req, res) => {
         });
     } catch (err){
         res.send(err)
-        console.log(err, "<-err in get route")
     }
 })
 
