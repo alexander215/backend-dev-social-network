@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/dev-social', {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
 });
 
 mongoose.connection.on('connected', () => {
