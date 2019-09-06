@@ -36,7 +36,23 @@ router.put('/:id', async (req, res) => {
     } catch(err){
         res.send(err);
     }
-})
+}),
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedProject = await Project.findByIdAndRemove(req.params.id);
+        console.log(deletedProject, "<--deletedProject in delete by id route")
+        res.json({
+            status: {
+                code: 200,
+                message: "Project successfully deleted"
+            },
+            data: deletedProject
+        })
+    } catch(err){
+        res.send(err);
+    }
+});
 
 router.get('/:id', async (req, res) => {
     try {
