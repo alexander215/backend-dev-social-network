@@ -14,10 +14,14 @@ router.post('/login', async (req, res) => {
                 req.session.username = foundUser.username;
                 req.session.logged = true;
                 
-                // res.redirect('/users')
                 res.json({
-                    success: true,
-                    user: foundUser
+                    // success: true,
+                    // user: foundUser
+                    status: {
+                        code: 200,
+                        message: 'User logged in',
+                        user: foundUser
+                    }
                 })
             } else {
                 req.session.message = "Username or Password incorrect, try again!"
@@ -46,8 +50,14 @@ router.post ('/register', async (req, res) => {
         req.session.logged = true;
 
         res.json({
-            success: true,
-            user:createUser
+            status: {
+                code: 200,
+                message: 'User logged in',
+                // user: createUser
+            },
+            data: createUser
+            // success: true,
+            // user:createUser
         })
     }catch (err) {
         res.send(err)
