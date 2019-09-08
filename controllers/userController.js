@@ -10,6 +10,7 @@ router.post('/login', async (req, res) => {
     
         if(foundUser){
             if(bcrypt.compareSync(req.body.password, foundUser.password)){
+                console.log('past bcrpyt');
                 req.session.userId = foundUser._id;
                 req.session.username = foundUser.username;
                 req.session.logged = true;
