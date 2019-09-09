@@ -1,20 +1,32 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../models/project');
+const User = require('../models/user');
 
 
 router.post('/create', async (req, res) => {
 
     try {
-        const createProject = await Project.create(req.body);
-        console.log(createProject, '<--createProject in post route');
-
+        const user = await User.findById(req.body.user._id)
+        const newProject = {
+            title: req.body.title,
+            description: req.body.description,
+            link: req.body.link,
+            created_by: req.body.user._id
+        }
+        const createProject = await Project.create(newProject);
+        // console.log(createProject, '<--createProject in post route');
+        user.projects.push(createProject._id)
+        user.save()
         res.json({
             status: {
                 code: 201,
                 message: 'Project successfully created'
             },
-            data: createProject
+            data: {
+                newProject: createProject,
+                updatedUser: user
+            }  
         })
     } catch(err){
         console.log(err);

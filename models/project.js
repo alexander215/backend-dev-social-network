@@ -4,7 +4,7 @@ const projectSchema = new mongoose.Schema({
     title: String,
     description: String,
     link: String,
-    comments: [],
+    // comments: [],
     created_by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

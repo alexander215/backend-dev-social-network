@@ -7,9 +7,15 @@ router.post('/login', async (req, res) => {
     try {
         const foundUser = await User.findOne({username: req.body.username});
         console.log(foundUser, '<--found User');
+        console.log(req.body, '<--req.body in login')
     
+        console.trace()
         if(foundUser){
+            console.trace()
+            console.log(req.body, '<--req.body.password in user controller')
+            console.log(req.session, '<--req.session in user controller')
             if(bcrypt.compareSync(req.body.password, foundUser.password)){
+                console.trace()
                 console.log('past bcrpyt');
                 req.session.userId = foundUser._id;
                 req.session.username = foundUser.username;
@@ -22,7 +28,8 @@ router.post('/login', async (req, res) => {
                         code: 200,
                         message: 'User logged in',
                         user: foundUser
-                    }
+                    },
+                    data: foundUser
                 })
             } else {
                 req.session.message = "Username or Password incorrect, try again!"
@@ -60,6 +67,7 @@ router.post ('/register', async (req, res) => {
             // success: true,
             // user:createUser
         })
+        console.log(req.session, 'req.session in register/')
     }catch (err) {
         res.send(err)
     }
@@ -79,7 +87,7 @@ router.get('/logout', (req, res) => {
 router.get('/:id', async (req, res) => {
     console.log(req.params, "<-req.params in find by id route")
     try {
-        const foundUser = await User.findById(req.params.id);
+        const foundUser = await User.findById(req.params.id).populate('projects');
         console.log(foundUser, '<-- foundUser in get by id route')
         res.json({
             status: {
