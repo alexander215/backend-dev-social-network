@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 9000;
+const PORT = process.env.PORT || 9000;
 const cors = require('cors');
 const session = require('express-session');
 
+require('dotenv').config()
 require('./db/db');
 
 
@@ -37,6 +38,6 @@ app.use('/projects', projectController);
 
 
 
-app.listen(PORT, ()=>{
-    console.log(`Loud and clear on ${PORT}`);
+app.listen(PORT, (err)=>{
+    console.log(err || `Loud and clear on ${PORT}`);
 })
